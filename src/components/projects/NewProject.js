@@ -5,7 +5,7 @@ import projectContext from '../../context/Projects/projectContext'
 const NewProject = () => {
 
     const projectsContext = useContext(projectContext);
-    const {formvisible, errorform, seeForm, addProject, seeErrorForm, nowProject}= projectsContext
+    const {formvisible, errorform, seeForm, addProject, seeErrorForm}= projectsContext
 
     const [project, setProject]=useState({
         name:''

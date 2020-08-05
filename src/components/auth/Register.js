@@ -10,7 +10,10 @@ const Register = () => {
     });
     const {name, email, password, confirPassword}=user;
     const onChange = e =>{
-
+        setUser({
+            ...user,
+            [e.target.name]: e.target.value
+        })
     }
 
     const onSubmit = e => {

@@ -1,12 +1,17 @@
 import React, {Fragment, useContext} from 'react';
 import Task from './Task';
+import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
-import projectContext from '../../context/Projects/projectContext'
+import projectContext from '../../context/Projects/projectContext';
+import taskContext from '../../context/Tasks/taskContext';
 
 const ListTasks = () => {
 
     const projectsContext = useContext(projectContext);
     const {project, deleteProject} = projectsContext;
+
+    const tasksContext = useContext(taskContext);
+    const { tasksproject }= tasksContext;
 
     //Se verifica porque en un inicio el project llega = null
     if(!project) return <h2>Selecciona un proyecto</h2>;
@@ -14,12 +19,7 @@ const ListTasks = () => {
     //destructurin para obtener el elemento [0] del array project
     const [selectProject] = project; 
 
-    const task = [
-        {name:'Elegir plataforma', state:true},
-        {name:'Elegir colores', state:false},
-        {name:'Elegir pagos', state:false},
-        {name:'Elegir hosting', state:true}
-    ]
+ 
 
 
     const onClickDelete = _ => {
@@ -30,13 +30,21 @@ const ListTasks = () => {
         <Fragment>
             <h2>Proyecto: {selectProject.name}</h2>
             <ul className="listado-tareas">
-                {task.length === 0
+                {tasksproject.length === 0
                     ? (<li className="tarea"><p>No hay tareas</p></li>)
-                    : task.map(task=>(
-                         <Task 
-                         task={task}
-                         />   
-                    ))
+                    : <TransitionGroup>
+                        {
+                            tasksproject.map(task=>(
+                                <CSSTransition
+                                    key={task.id}
+                                    timeout={200}
+                                    className="tarea"
+                                >
+                                    <Task task={task}/>
+                                </CSSTransition>   
+                            ))
+                        }
+                    </TransitionGroup>
                 }
             </ul>
             <button
