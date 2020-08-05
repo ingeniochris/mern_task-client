@@ -5,17 +5,17 @@ import projectContext from '../../context/Projects/projectContext'
 const NewProject = () => {
 
     const projectsContext = useContext(projectContext);
-    const {formVisible, seeForm}= projectsContext
+    const {formvisible, errorform, seeForm, addProject, seeErrorForm, nowProject}= projectsContext
 
-    const [proyect, setProject]=useState({
+    const [project, setProject]=useState({
         name:''
     })
 
-    const {name}= proyect;
+    const {name}= project;
 
     const onChangeProject= e =>{
         setProject({
-            ...proyect,
+            ...project,
             [e.target.name]: e.target.value
         })
     }
@@ -24,10 +24,18 @@ const NewProject = () => {
         e.preventDefault();
 
         //validar
+        if(name === ''){
+            seeErrorForm();
+            return
+        };
 
         //agregar state
+        addProject(project);
 
         //reiniciar el state
+        setProject({
+            name:''
+        })
     }
 
     const onClick = _ =>{
@@ -43,7 +51,7 @@ const NewProject = () => {
         >
             Nuevo proyecto
         </button>
-        {formVisible ?
+        {formvisible ?
             (
                 <form
             className="formulario-nuevo-proyecto"
@@ -64,9 +72,9 @@ const NewProject = () => {
             />
             </form>
             )
-            : null
+            : null }
 
-        }
+            {errorform ? <p className="mensage error">Antes de agregar llene el formulario</p> : null}
     </Fragment>
     )
 }

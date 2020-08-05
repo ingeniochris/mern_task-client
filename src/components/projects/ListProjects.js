@@ -14,7 +14,7 @@ const ListProjects = () => {
     },[]);
 
     //verificar si de inicio tiene proyectos
-    if(projects.length===0) return null
+    if(projects.length===0) return <p>No hay proyectos, comienza creando uno</p>
 
    
 
