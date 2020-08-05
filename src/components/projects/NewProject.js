@@ -1,6 +1,11 @@
-import React, {Fragment, useState} from 'react'
+import React, {Fragment, useState, useContext} from 'react';
+
+import projectContext from '../../context/Projects/projectContext'
 
 const NewProject = () => {
+
+    const projectsContext = useContext(projectContext);
+    const {formVisible, seeForm}= projectsContext
 
     const [proyect, setProject]=useState({
         name:''
@@ -25,15 +30,22 @@ const NewProject = () => {
         //reiniciar el state
     }
 
+    const onClick = _ =>{
+        seeForm();
+    } 
+
     return (
     <Fragment>
         <button
             type="button"
             className="btn btn-block btn-primario"
+            onClick={onClick}
         >
             Nuevo proyecto
         </button>
-        <form
+        {formVisible ?
+            (
+                <form
             className="formulario-nuevo-proyecto"
             onSubmit={onSubmitProject}
         >
@@ -50,7 +62,11 @@ const NewProject = () => {
                 className="btn btn-primario btn-block"
                 value="Agregar Proyecto"
             />
-        </form>
+            </form>
+            )
+            : null
+
+        }
     </Fragment>
     )
 }
